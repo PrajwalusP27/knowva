@@ -38,7 +38,7 @@ function ProtectedAdminRoute({ children }) {
       try {
 
         const res = await axios.get(
-          `http://localhost:5000/api/users/${user.id}`
+          `https://knowva-93t5.onrender.com/api/users/${user.id}`
         );
 
         setIsAdmin(res.data?.role === "admin");

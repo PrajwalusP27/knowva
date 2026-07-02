@@ -25,7 +25,7 @@ function Messages() {
 
   useEffect(() => {
     if (!user) return;
-    axios.get(`http://localhost:5000/api/messages/my-chats/${user.id}`)
+    axios.get(`https://knowva-93t5.onrender.com/api/messages/my-chats/${user.id}`)
       .then((r) => setChats(Array.isArray(r.data) ? r.data : []))
       .catch(console.log)
       .finally(() => setLoading(false));

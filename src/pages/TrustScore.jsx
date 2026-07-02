@@ -148,7 +148,7 @@ function TrustScore() {
     try {
 
       const res = await axios.get(
-        `http://localhost:5000/api/users/trust-score/${user.id}`
+        `https://knowva-93t5.onrender.com/api/users/trust-score/${user.id}`
       );
 
       setData(res.data);

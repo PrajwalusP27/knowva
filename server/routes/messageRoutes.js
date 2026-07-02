@@ -64,7 +64,7 @@ router.post(
         success: true,
 
         fileUrl:
-          `http://localhost:5000/uploads/${req.file.filename}`,
+          `https://knowva-93t5.onrender.com/uploads/${req.file.filename}`,
       });
 
     } catch (error) {

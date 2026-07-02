@@ -48,7 +48,7 @@ function Contact() {
 
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000/api/email/contact", form);
+      await axios.post("https://knowva-93t5.onrender.com/api/email/contact", form);
       setSubmitted(true);
     } catch (err) {
       setServerErr(

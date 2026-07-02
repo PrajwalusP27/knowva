@@ -38,7 +38,7 @@ function MySkills() {
   const fetchUserData = async () => {
     if (!user) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/users/${user.id}`);
+      const res = await axios.get(`https://knowva-93t5.onrender.com/api/users/${user.id}`);
       if (res.data) {
         setTeachSkills(res.data.teachSkills || []);
         setLearnSkills(res.data.learnSkills || []);
@@ -51,18 +51,18 @@ function MySkills() {
     if (!user) return;
     try {
       const [verRes, allRes, scoreRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/validations/verified-skills/${user.id}`),
-        axios.get(`http://localhost:5000/api/validations/user/${user.id}`),
-        axios.get(`http://localhost:5000/api/users/trust-score/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/validations/verified-skills/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/validations/user/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/users/trust-score/${user.id}`),
       ]);
       setVerifiedSkills(verRes.data || []);
       setAllValidations(allRes.data || []);
       setTrustScore(scoreRes.data || null);
 
       const [badgesRes, certsRes, eligRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/badges/${user.id}`),
-        axios.get(`http://localhost:5000/api/certificates/my/${user.id}`),
-        axios.get(`http://localhost:5000/api/certificates/eligible/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/badges/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/certificates/my/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/certificates/eligible/${user.id}`),
       ]);
       setMyBadges(badgesRes.data || []);
       setMyCerts(certsRes.data || []);
@@ -81,7 +81,7 @@ function MySkills() {
     if (!user) return;
     try {
       setSaving(true);
-      await axios.post("http://localhost:5000/api/users/save-user", {
+      await axios.post("https://knowva-93t5.onrender.com/api/users/save-user", {
         clerkId: user.id, name: user.fullName,
         email: user.primaryEmailAddress?.emailAddress,
         image: user.imageUrl,
@@ -116,14 +116,14 @@ function MySkills() {
   const claimCert = async (item) => {
     try {
       setIssuingCert(item.skill);
-      await axios.post("http://localhost:5000/api/certificates/issue", {
+      await axios.post("https://knowva-93t5.onrender.com/api/certificates/issue", {
         clerkId: user.id, userName: user.fullName, skill: item.skill,
         validationCount: item.validationCount, averageRating: item.averageRating,
         sessionCompleted: item.sessionCompleted, peerTestPassed: item.peerTestPassed,
       });
       const [certsRes, eligRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/certificates/my/${user.id}`),
-        axios.get(`http://localhost:5000/api/certificates/eligible/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/certificates/my/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/certificates/eligible/${user.id}`),
       ]);
       setMyCerts(certsRes.data || []);
       setEligibleCerts(eligRes.data?.eligible || []);
@@ -133,8 +133,8 @@ function MySkills() {
 
   const checkBadges = async () => {
     try {
-      await axios.post(`http://localhost:5000/api/badges/award/${user.id}`, { userName: user.fullName });
-      const res = await axios.get(`http://localhost:5000/api/badges/${user.id}`);
+      await axios.post(`https://knowva-93t5.onrender.com/api/badges/award/${user.id}`, { userName: user.fullName });
+      const res = await axios.get(`https://knowva-93t5.onrender.com/api/badges/${user.id}`);
       setMyBadges(res.data || []);
     } catch (e) { console.log(e); }
   };

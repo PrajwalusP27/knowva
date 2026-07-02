@@ -22,7 +22,7 @@ import PageHeader from "../components/PageHeader";
 // SOCKET
 // ==========================================
 const socket =
-  io("http://localhost:5000");
+  io("https://knowva-93t5.onrender.com");
 
 
 function Dashboard() {
@@ -107,9 +107,9 @@ function Dashboard() {
 
       const [scoreRes, badgesRes, certsRes] =
         await Promise.all([
-          axios.get(`http://localhost:5000/api/users/trust-score/${user.id}`),
-          axios.get(`http://localhost:5000/api/badges/${user.id}`),
-          axios.get(`http://localhost:5000/api/certificates/my/${user.id}`),
+          axios.get(`https://knowva-93t5.onrender.com/api/users/trust-score/${user.id}`),
+          axios.get(`https://knowva-93t5.onrender.com/api/badges/${user.id}`),
+          axios.get(`https://knowva-93t5.onrender.com/api/certificates/my/${user.id}`),
         ]);
 
       setTrustScore(scoreRes.data);
@@ -132,7 +132,7 @@ function Dashboard() {
     try {
 
       const res = await axios.get(
-        `http://localhost:5000/api/users/${user.id}`
+        `https://knowva-93t5.onrender.com/api/users/${user.id}`
       );
 
       if (res.data) {
@@ -165,7 +165,7 @@ function Dashboard() {
       try {
 
         const res = await axios.get(
-          `http://localhost:5000/api/connections/pending/${user?.id}`
+          `https://knowva-93t5.onrender.com/api/connections/pending/${user?.id}`
         );
 
         setPendingRequests(
@@ -189,7 +189,7 @@ function Dashboard() {
       try {
 
         const res = await axios.get(
-          `http://localhost:5000/api/connections/my-connections/${user?.id}`
+          `https://knowva-93t5.onrender.com/api/connections/my-connections/${user?.id}`
         );
 
         setConnections(
@@ -215,7 +215,7 @@ function Dashboard() {
         setAcceptingId(connectionId);
 
         const res = await axios.put(
-          `http://localhost:5000/api/connections/accept/${connectionId}`
+          `https://knowva-93t5.onrender.com/api/connections/accept/${connectionId}`
         );
 
         if (res.data?.connection) {
@@ -266,7 +266,7 @@ function Dashboard() {
         const conn = pendingRequests.find((r) => r._id === connectionId);
 
         await axios.put(
-          `http://localhost:5000/api/connections/reject/${connectionId}`
+          `https://knowva-93t5.onrender.com/api/connections/reject/${connectionId}`
         );
 
         // Notify sender of rejection
@@ -303,7 +303,7 @@ function Dashboard() {
       setSaving(true);
 
       await axios.post(
-        "http://localhost:5000/api/users/save-user",
+        "https://knowva-93t5.onrender.com/api/users/save-user",
         {
           clerkId: user?.id,
 
@@ -370,7 +370,7 @@ function Dashboard() {
       try {
 
         const res = await axios.get(
-          `http://localhost:5000/api/notifications/unread-count/${user.id}`
+          `https://knowva-93t5.onrender.com/api/notifications/unread-count/${user.id}`
         );
 
         setUnreadNotifs(res.data.count || 0);

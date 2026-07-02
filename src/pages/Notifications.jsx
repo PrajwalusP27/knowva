@@ -6,7 +6,7 @@ import { useUser } from "@clerk/clerk-react";
 import Sidebar from "../components/Sidebar";
 import PageHeader from "../components/PageHeader";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://knowva-93t5.onrender.com");
 
 const TYPE_META = {
   message:     { icon: "💬", label: "Message",     dot: "bg-blue-500",    pill: "bg-blue-50 text-blue-600 border-blue-100" },
@@ -49,7 +49,7 @@ function Notifications() {
   const fetchNotifs = async () => {
     if (!user) return;
     try {
-      const r = await axios.get(`http://localhost:5000/api/notifications/${user.id}`);
+      const r = await axios.get(`https://knowva-93t5.onrender.com/api/notifications/${user.id}`);
       setNotifications(r.data || []);
     } catch (e) { console.log(e); }
     finally { setLoading(false); }
@@ -57,20 +57,20 @@ function Notifications() {
 
   const markRead = async (n) => {
     if (!n.isRead) {
-      await axios.put(`http://localhost:5000/api/notifications/mark-read/${n._id}`);
+      await axios.put(`https://knowva-93t5.onrender.com/api/notifications/mark-read/${n._id}`);
       setNotifications((p) => p.map((x) => x._id === n._id ? { ...x, isRead: true } : x));
     }
     if (n.linkTo) navigate(n.linkTo);
   };
 
   const markAllRead = async () => {
-    await axios.put(`http://localhost:5000/api/notifications/mark-all-read/${user.id}`);
+    await axios.put(`https://knowva-93t5.onrender.com/api/notifications/mark-all-read/${user.id}`);
     setNotifications((p) => p.map((n) => ({ ...n, isRead: true })));
   };
 
   const del = async (id, e) => {
     e.stopPropagation();
-    await axios.delete(`http://localhost:5000/api/notifications/${id}`);
+    await axios.delete(`https://knowva-93t5.onrender.com/api/notifications/${id}`);
     setNotifications((p) => p.filter((n) => n._id !== id));
   };
 

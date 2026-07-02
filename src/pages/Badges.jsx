@@ -41,8 +41,8 @@ function Badges() {
     try {
 
       const [earnedRes, defsRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/badges/${user.id}`),
-        axios.get("http://localhost:5000/api/badges/definitions/all"),
+        axios.get(`https://knowva-93t5.onrender.com/api/badges/${user.id}`),
+        axios.get("https://knowva-93t5.onrender.com/api/badges/definitions/all"),
       ]);
 
       setEarned(earnedRes.data     || []);
@@ -77,7 +77,7 @@ function Badges() {
       setAwardResult(null);
 
       const res = await axios.post(
-        `http://localhost:5000/api/badges/award/${user.id}`,
+        `https://knowva-93t5.onrender.com/api/badges/award/${user.id}`,
         { userName: user.fullName }
       );
 

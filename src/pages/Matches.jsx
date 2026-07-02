@@ -17,7 +17,7 @@ function Matches() {
 
   useEffect(() => {
     if (!user) return;
-    axios.get(`http://localhost:5000/api/connections/my-connections/${user.id}`)
+    axios.get(`https://knowva-93t5.onrender.com/api/connections/my-connections/${user.id}`)
       .then((r) => setConnections(r.data || []))
       .catch(console.log)
       .finally(() => setLoading(false));

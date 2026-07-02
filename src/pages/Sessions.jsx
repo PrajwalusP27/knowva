@@ -29,7 +29,7 @@ import "react-calendar/dist/Calendar.css";
 // ==========================================
 // SOCKET
 // ==========================================
-const socket = io("http://localhost:5000");
+const socket = io("https://knowva-93t5.onrender.com");
 
 
 function Sessions() {
@@ -76,8 +76,8 @@ function Sessions() {
     if (!user) return;
     try {
       const [sentRes, recvRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/peer-tests/sent/${user.id}`),
-        axios.get(`http://localhost:5000/api/peer-tests/received/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/peer-tests/sent/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/peer-tests/received/${user.id}`),
       ]);
       setPeerTests({ sent: sentRes.data || [], received: recvRes.data || [] });
     } catch (e) { console.log(e); }
@@ -85,14 +85,14 @@ function Sessions() {
 
   const fetchVerifiedSkills = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/validations/verified-skills/${user?.id}`);
+      const res = await axios.get(`https://knowva-93t5.onrender.com/api/validations/verified-skills/${user?.id}`);
       setVerifiedSkills(res.data || []);
     } catch (e) { console.log(e); }
   };
 
   const fetchSessions = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/sessions/my-sessions/${user?.id}`);
+      const res = await axios.get(`https://knowva-93t5.onrender.com/api/sessions/my-sessions/${user?.id}`);
       setSessions(Array.isArray(res.data) ? res.data : []);
     } catch (e) { console.log(e); }
     finally { setLoading(false); }
@@ -107,7 +107,7 @@ function Sessions() {
   // ==========================================
   const acceptSession = async (sessionId) => {
     const sess = sessions.find((s) => s._id === sessionId);
-    await axios.put(`http://localhost:5000/api/sessions/accept/${sessionId}`);
+    await axios.put(`https://knowva-93t5.onrender.com/api/sessions/accept/${sessionId}`);
     if (sess) socket.emit("send_notification", {
       recipientClerkId: sess.senderClerkId, senderClerkId: user?.id,
       senderName: user?.fullName, senderImage: user?.imageUrl || "",
@@ -119,7 +119,7 @@ function Sessions() {
 
   const rejectSession = async (sessionId) => {
     const sess = sessions.find((s) => s._id === sessionId);
-    await axios.put(`http://localhost:5000/api/sessions/reject/${sessionId}`);
+    await axios.put(`https://knowva-93t5.onrender.com/api/sessions/reject/${sessionId}`);
     if (sess) socket.emit("send_notification", {
       recipientClerkId: sess.senderClerkId, senderClerkId: user?.id,
       senderName: user?.fullName, senderImage: user?.imageUrl || "",
@@ -131,7 +131,7 @@ function Sessions() {
 
   const completeSession = async (sessionId) => {
     const sess = sessions.find((s) => s._id === sessionId);
-    await axios.put(`http://localhost:5000/api/sessions/complete/${sessionId}`);
+    await axios.put(`https://knowva-93t5.onrender.com/api/sessions/complete/${sessionId}`);
     if (sess) {
       const otherId = sess.senderClerkId === user?.id ? sess.receiverClerkId : sess.senderClerkId;
       socket.emit("send_notification", {
@@ -145,20 +145,20 @@ function Sessions() {
   };
 
   const archiveSession = async (sessionId) => {
-    await axios.put(`http://localhost:5000/api/sessions/archive/${sessionId}`, { clerkId: user?.id });
+    await axios.put(`https://knowva-93t5.onrender.com/api/sessions/archive/${sessionId}`, { clerkId: user?.id });
     fetchSessions();
   };
 
   const submitReview = async (sessionId) => {
     const { rating, text } = getReview(sessionId);
-    await axios.put(`http://localhost:5000/api/sessions/review/${sessionId}`, { rating, review: text });
+    await axios.put(`https://knowva-93t5.onrender.com/api/sessions/review/${sessionId}`, { rating, review: text });
     setReview(sessionId, { rating: 5, text: "" });
     fetchSessions();
   };
 
   const saveNotes = async (sessionId) => {
     const { text, link } = getNotes(sessionId);
-    await axios.put(`http://localhost:5000/api/sessions/notes/${sessionId}`, { notes: text, resources: link });
+    await axios.put(`https://knowva-93t5.onrender.com/api/sessions/notes/${sessionId}`, { notes: text, resources: link });
     setNotes(sessionId, { text: "", link: "" });
     fetchSessions();
   };
@@ -168,7 +168,7 @@ function Sessions() {
     const receiver = session.senderClerkId === user?.id
       ? { id: session.receiverClerkId, name: session.receiverName }
       : { id: session.senderClerkId,   name: session.senderName };
-    await axios.post("http://localhost:5000/api/validations/create", {
+    await axios.post("https://knowva-93t5.onrender.com/api/validations/create", {
       validatorClerkId: user?.id, validatorName: user?.fullName,
       receiverClerkId: receiver.id, receiverName: receiver.name,
       skill: v.skill, rating: v.rating, feedback: v.feedback,
@@ -192,7 +192,7 @@ function Sessions() {
     if (session.receiverClerkId !== user?.id) {
       alert("Only the teacher can create a peer test."); return;
     }
-    await axios.post("http://localhost:5000/api/peer-tests/create", {
+    await axios.post("https://knowva-93t5.onrender.com/api/peer-tests/create", {
       testerClerkId: user.id, testerName: user.fullName,
       testeeClerkId: session.senderClerkId, testeeName: session.senderName,
       skill, questions, sessionId: session._id,
@@ -209,7 +209,7 @@ function Sessions() {
 
   const submitTestAnswers = async (test) => {
     const answers = answerData[test._id] || [];
-    await axios.put(`http://localhost:5000/api/peer-tests/submit/${test._id}`, { answers });
+    await axios.put(`https://knowva-93t5.onrender.com/api/peer-tests/submit/${test._id}`, { answers });
     socket.emit("send_notification", {
       recipientClerkId: test.testerClerkId, senderClerkId: user?.id,
       senderName: user?.fullName, senderImage: user?.imageUrl || "",
@@ -222,7 +222,7 @@ function Sessions() {
   const reviewPeerTest = async (test) => {
     const rd = reviewData2[test._id] || {};
     if (!rd.result) { alert("Please select Pass or Fail."); return; }
-    await axios.put(`http://localhost:5000/api/peer-tests/review/${test._id}`, {
+    await axios.put(`https://knowva-93t5.onrender.com/api/peer-tests/review/${test._id}`, {
       score: rd.score || 0, result: rd.result, testerFeedback: rd.feedback || "",
     });
     const label = rd.result === "pass" ? "passed" : "failed";
@@ -241,7 +241,7 @@ function Sessions() {
   const generateCertificate = async (session, peerTest) => {
     try {
       setGeneratingCert(session._id);
-      const res = await axios.post("http://localhost:5000/api/certificates/issue", {
+      const res = await axios.post("https://knowva-93t5.onrender.com/api/certificates/issue", {
         clerkId: session.senderClerkId, userName: session.senderName,
         skill: peerTest.skill, teacherClerkId: user?.id,
         teacherName: session.receiverName, sessionCompleted: true,
@@ -275,7 +275,7 @@ function Sessions() {
 
   const sendCertificateViaMessages = async (session, cert) => {
     try {
-      await axios.post("http://localhost:5000/api/messages/send", {
+      await axios.post("https://knowva-93t5.onrender.com/api/messages/send", {
         senderClerkId: user?.id, receiverClerkId: session.senderClerkId,
         senderName: user?.fullName, message: cert.certText,
       });
@@ -640,7 +640,7 @@ function Sessions() {
                                 {receivedTest.result === "fail" && (
                                   <button
                                     onClick={async () => {
-                                      await axios.put(`http://localhost:5000/api/peer-tests/request-retest/${receivedTest._id}`);
+                                      await axios.put(`https://knowva-93t5.onrender.com/api/peer-tests/request-retest/${receivedTest._id}`);
                                       socket.emit("send_notification", {
                                         recipientClerkId: session.receiverClerkId, senderClerkId: user?.id,
                                         senderName: user?.fullName, senderImage: user?.imageUrl || "",

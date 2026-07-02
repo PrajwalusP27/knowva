@@ -7,7 +7,7 @@ import { useUser } from "@clerk/clerk-react";
 // ==========================================
 // SOCKET
 // ==========================================
-const socket = io("http://localhost:5000");
+const socket = io("https://knowva-93t5.onrender.com");
 
 function Chat() {
   const { user }   = useUser();
@@ -50,7 +50,7 @@ function Chat() {
   const fetchConversation = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/messages/conversation/${user?.id}/${otherUserId}`
+        `https://knowva-93t5.onrender.com/api/messages/conversation/${user?.id}/${otherUserId}`
       );
       setMessages(Array.isArray(res.data) ? res.data : []);
     } catch (e) { console.log(e); }
@@ -61,7 +61,7 @@ function Chat() {
   // ==========================================
   const markMessagesAsSeen = async () => {
     try {
-      await axios.put("http://localhost:5000/api/messages/mark-seen", {
+      await axios.put("https://knowva-93t5.onrender.com/api/messages/mark-seen", {
         senderClerkId:   otherUserId,
         receiverClerkId: user?.id,
       });
@@ -74,7 +74,7 @@ function Chat() {
   // ==========================================
   const bookSession = async () => {
     try {
-      await axios.post("http://localhost:5000/api/sessions/create", {
+      await axios.post("https://knowva-93t5.onrender.com/api/sessions/create", {
         senderClerkId:   user?.id,
         receiverClerkId: otherUserId,
         senderName:      user?.fullName,
@@ -156,7 +156,7 @@ function Chat() {
         setUploading(true);
         const form = new FormData();
         form.append("file", selectedFile);
-        const res = await axios.post("http://localhost:5000/api/messages/upload", form);
+        const res = await axios.post("https://knowva-93t5.onrender.com/api/messages/upload", form);
         fileUrl = res.data.fileUrl;
       } catch (e) { console.log(e); }
       finally { setUploading(false); }
@@ -185,7 +185,7 @@ function Chat() {
       linkTo: "/messages",
     });
 
-    await axios.post("http://localhost:5000/api/messages/send", messageData);
+    await axios.post("https://knowva-93t5.onrender.com/api/messages/send", messageData);
     setMessages((p) => [...p, messageData]);
     setMessage("");
     setSelectedFile(null);

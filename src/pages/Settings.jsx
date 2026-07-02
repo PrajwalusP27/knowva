@@ -29,7 +29,7 @@ function Settings() {
   const fetchProfile = async () => {
     if (!user) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/users/${user.id}`);
+      const res = await axios.get(`https://knowva-93t5.onrender.com/api/users/${user.id}`);
       if (res.data) {
         setBio(res.data.bio || "");
         setLocation(res.data.location || "");
@@ -49,7 +49,7 @@ function Settings() {
     if (!user) return;
     try {
       setSaving(true); setSaved(false);
-      await axios.post("http://localhost:5000/api/users/save-user", {
+      await axios.post("https://knowva-93t5.onrender.com/api/users/save-user", {
         clerkId: user.id, name: user.fullName,
         email: user.primaryEmailAddress?.emailAddress,
         image: user.imageUrl,

@@ -24,8 +24,8 @@ function Certificates() {
     if (!user) return;
     try {
       const [mineRes, eligRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/certificates/my/${user.id}`),
-        axios.get(`http://localhost:5000/api/certificates/eligible/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/certificates/my/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/certificates/eligible/${user.id}`),
       ]);
       setCertificates(mineRes.data || []);
       setEligible(eligRes.data?.eligible || []);
@@ -43,7 +43,7 @@ function Certificates() {
   const claimCertificate = async (skillData) => {
     try {
       setIssuing(skillData.skill);
-      await axios.post("http://localhost:5000/api/certificates/issue", {
+      await axios.post("https://knowva-93t5.onrender.com/api/certificates/issue", {
         clerkId:         user.id,
         userName:        user.fullName,
         skill:           skillData.skill,
@@ -64,7 +64,7 @@ function Certificates() {
       setVerifying(true);
       setVerifyResult(null);
       const res = await axios.get(
-        `http://localhost:5000/api/certificates/verify/${verifyId.trim()}`
+        `https://knowva-93t5.onrender.com/api/certificates/verify/${verifyId.trim()}`
       );
       setVerifyResult(res.data);
     } catch {

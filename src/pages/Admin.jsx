@@ -62,7 +62,7 @@ function Admin() {
   const fetchStats = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/admin/stats",
+        "https://knowva-93t5.onrender.com/api/admin/stats",
         { headers: headers() }
       );
       setStats(res.data);
@@ -79,7 +79,7 @@ function Admin() {
   const fetchUsers = async (q = "") => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/admin/users${q ? `?search=${q}` : ""}`,
+        `https://knowva-93t5.onrender.com/api/admin/users${q ? `?search=${q}` : ""}`,
         { headers: headers() }
       );
       setUsers(res.data || []);
@@ -94,7 +94,7 @@ function Admin() {
   const fetchSessions = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/admin/sessions",
+        "https://knowva-93t5.onrender.com/api/admin/sessions",
         { headers: headers() }
       );
       setSessions(res.data || []);
@@ -109,7 +109,7 @@ function Admin() {
   const fetchValidations = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/admin/validations",
+        "https://knowva-93t5.onrender.com/api/admin/validations",
         { headers: headers() }
       );
       setValidations(res.data || []);
@@ -124,7 +124,7 @@ function Admin() {
   const fetchCertificates = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/admin/certificates",
+        "https://knowva-93t5.onrender.com/api/admin/certificates",
         { headers: headers() }
       );
       setCertificates(res.data || []);
@@ -139,7 +139,7 @@ function Admin() {
   const toggleSuspend = async (userId) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/users/${userId}/suspend`,
+        `https://knowva-93t5.onrender.com/api/admin/users/${userId}/suspend`,
         {},
         { headers: headers() }
       );
@@ -156,7 +156,7 @@ function Admin() {
     if (!window.confirm("Delete this user permanently?")) return;
     try {
       await axios.delete(
-        `http://localhost:5000/api/admin/users/${userId}`,
+        `https://knowva-93t5.onrender.com/api/admin/users/${userId}`,
         { headers: headers() }
       );
       fetchUsers(search);
@@ -172,7 +172,7 @@ function Admin() {
     if (!window.confirm("Revoke this certificate?")) return;
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/certificates/${certId}/revoke`,
+        `https://knowva-93t5.onrender.com/api/admin/certificates/${certId}/revoke`,
         {},
         { headers: headers() }
       );

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://knowva-93t5.onrender.com");
 
 const NAV = [
   { to: "/dashboard",     label: "Dashboard",     icon: "▦" },
@@ -28,7 +28,7 @@ function Sidebar({ active, unreadNotifs: propUnread }) {
 
   useEffect(() => {
     if (!user) return;
-    axios.get(`http://localhost:5000/api/users/${user.id}`)
+    axios.get(`https://knowva-93t5.onrender.com/api/users/${user.id}`)
       .then((r) => setIsAdmin(r.data?.role === "admin"))
       .catch(() => {});
   }, [user]);
@@ -36,7 +36,7 @@ function Sidebar({ active, unreadNotifs: propUnread }) {
   useEffect(() => {
     if (!user || propUnread !== undefined) return;
     const fetch = () =>
-      axios.get(`http://localhost:5000/api/notifications/unread-count/${user.id}`)
+      axios.get(`https://knowva-93t5.onrender.com/api/notifications/unread-count/${user.id}`)
         .then((r) => setSelfUnread(r.data.count || 0))
         .catch(() => {});
     fetch();

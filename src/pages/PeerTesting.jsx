@@ -133,13 +133,13 @@ function PeerTesting() {
       const [sentRes, receivedRes, connRes] =
         await Promise.all([
           axios.get(
-            `http://localhost:5000/api/peer-tests/sent/${user.id}`
+            `https://knowva-93t5.onrender.com/api/peer-tests/sent/${user.id}`
           ),
           axios.get(
-            `http://localhost:5000/api/peer-tests/received/${user.id}`
+            `https://knowva-93t5.onrender.com/api/peer-tests/received/${user.id}`
           ),
           axios.get(
-            `http://localhost:5000/api/connections/my-connections/${user.id}`
+            `https://knowva-93t5.onrender.com/api/connections/my-connections/${user.id}`
           ),
         ]);
 
@@ -214,7 +214,7 @@ function PeerTesting() {
       setCreating(true);
 
       await axios.post(
-        "http://localhost:5000/api/peer-tests/create",
+        "https://knowva-93t5.onrender.com/api/peer-tests/create",
         {
           testerClerkId: user.id,
           testerName:    user.fullName,
@@ -255,7 +255,7 @@ function PeerTesting() {
       setSubmitting(test._id);
 
       await axios.put(
-        `http://localhost:5000/api/peer-tests/submit/${test._id}`,
+        `https://knowva-93t5.onrender.com/api/peer-tests/submit/${test._id}`,
         { answers }
       );
 
@@ -290,7 +290,7 @@ function PeerTesting() {
       setReviewing(test._id);
 
       await axios.put(
-        `http://localhost:5000/api/peer-tests/review/${test._id}`,
+        `https://knowva-93t5.onrender.com/api/peer-tests/review/${test._id}`,
         {
           score:         rd.score || 0,
           result:        rd.result,

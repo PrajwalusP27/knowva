@@ -6,7 +6,7 @@ import Sidebar from "../components/Sidebar";
 import PageHeader from "../components/PageHeader";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://knowva-93t5.onrender.com");
 
 
 function Community() {
@@ -32,11 +32,11 @@ function Community() {
     if (!user) return;
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/users/matches/${user.id}`
+        `https://knowva-93t5.onrender.com/api/users/matches/${user.id}`
       );
       // Also get ALL users with skills to include non-matches
       const allRes = await axios.get(
-        "http://localhost:5000/api/users/all-with-skills"
+        "https://knowva-93t5.onrender.com/api/users/all-with-skills"
       );
       // Merge: matches first, then rest (deduplicated)
       const matchIds = new Set((res.data || []).map((u) => u.clerkId));
@@ -53,7 +53,7 @@ function Community() {
       // Fallback: use matches endpoint only
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/users/matches/${user.id}`
+          `https://knowva-93t5.onrender.com/api/users/matches/${user.id}`
         );
         const users = (res.data || []).filter((u) => u.clerkId !== user.id);
         setAllUsers(users);
@@ -71,8 +71,8 @@ function Community() {
     if (!user) return;
     try {
       const [pendRes, connRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/connections/pending/${user.id}`),
-        axios.get(`http://localhost:5000/api/connections/my-connections/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/connections/pending/${user.id}`),
+        axios.get(`https://knowva-93t5.onrender.com/api/connections/my-connections/${user.id}`),
       ]);
       const ids = new Set();
       (pendRes.data  || []).forEach((c) => ids.add(c.receiverClerkId));
@@ -119,7 +119,7 @@ function Community() {
   const sendRequest = async (targetUser) => {
     try {
       setSending(targetUser.clerkId);
-      await axios.post("http://localhost:5000/api/connections/send", {
+      await axios.post("https://knowva-93t5.onrender.com/api/connections/send", {
         senderClerkId:   user.id,
         senderName:      user.fullName,
         receiverClerkId: targetUser.clerkId,
