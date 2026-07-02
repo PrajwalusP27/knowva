@@ -65,9 +65,10 @@ const server =
 // ==========================================
 const io = new Server(server, {
   cors: {
-    origin:
+    origin:[
       "http://localhost:5173",
-
+      "https://knowva-lovat.vercel.app"
+    ],
     methods: [
       "GET",
       "POST",
